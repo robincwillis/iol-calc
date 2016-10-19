@@ -1,0 +1,75 @@
+@import 'setup/variables';
+@import 'setup/typography';
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+	font-family: $main-font;
+  text-rendering: auto;
+  -webkit-text-size-adjust:none;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  color: $text-color;
+  font-weight: normal;
+  width:100%;
+  margin:0;
+  background: $bg-color;
+}
+
+header {
+  margin-bottom:20px;
+}
+
+
+.root-container{
+
+  width: 100%;
+  margin: 0 auto;
+  padding: $gutter;
+  max-width:960px;
+  padding-bottom:50px;
+}
+
+
+.row {
+
+  margin: 0 -$gutter/2;
+  margin-top:0;
+}
+
+.col {
+  float :left;
+  padding: 0 $gutter/2;
+}
+
+.col-2{
+  width:16.65%;
+}
+
+.col-3 {
+  width:25%;
+}
+
+.col-4{
+  width:33%;
+}
+
+.col-6 {
+  width:50%;
+}
+
+.col-12 {
+  width:100%;
+}
+
+
+
+.graph {
+  width:100%;
+  background:$white;
+  height:220px;
+  margin-bottom:20px;
+  border: 1px solid $dark-gray;
+}

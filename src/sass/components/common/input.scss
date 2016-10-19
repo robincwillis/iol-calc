@@ -1,0 +1,183 @@
+@import 'setup/variables';
+
+label{
+  height:48px;
+  width:100%;
+  line-height:48px;
+	border-bottom: 1px solid $light-gray;
+	font-size: 14px;
+	color: $label-color;
+	letter-spacing: 0.77px;
+	display: block;
+	text-transform: uppercase;
+
+}
+
+input {
+	padding-right:3px;
+	background:transparent;
+	height:48px;
+	width:100%;
+	line-height:48px;
+	font-size: 16px;
+	color: $input-color;
+	letter-spacing: 0.88px;
+	border:none;
+	border-bottom: 1px solid $light-gray;
+	text-align:right;
+	text-transform: uppercase;
+
+	&:focus {
+		outline:none;
+		background:rgba(200,200,90,0.1);
+	}
+}
+
+.input-container {
+	position:relative;
+
+	&.error {
+		.input-status {
+				background:$red;
+		}
+		&::after{
+			position:absolute;
+			top: 3px;
+			right:0;
+			left: 8px;
+			bottom:3px;
+			content : '';
+			background:$red;
+			z-index: -1;
+		}
+
+		input, label {
+			color : $white !important;
+		}
+
+	}
+
+	&.valid {
+		.input-status {
+				background:$green;
+		}
+	}
+
+	&.empty {
+		.input-status {
+			background:$light-gray;
+		}
+	}
+}
+
+.input-status {
+	position:absolute;
+	top:3px;
+	left:0;
+	bottom:3px;
+	width:4px;
+
+}
+
+::-webkit-input-placeholder {
+   color: $light-gray;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $light-gray;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $light-gray;
+}
+
+:-ms-input-placeholder {
+   color: $light-gray;
+}
+
+
+.form-group{
+	&.small {
+    label {
+      font-size:12px;
+      line-height: 18px;
+    }
+		input {
+			font-size: 12px;
+			letter-spacing: 0.77px;
+			border-top:1px solid $light-gray;
+		}
+	}
+	&.large {
+		label {
+			font-size:16px;
+			height:55px;
+			line-height: 55px;
+		}
+		input {
+			font-size: 36px;
+			color: $black;
+			letter-spacing: 0px;
+			height:55px;
+			line-height: 55px;
+		}
+	}
+
+  &.first {
+		label {
+			border-top:1px solid $dark-gray;
+		}
+		input {
+			border-top:1px solid $dark-gray;
+		}
+  }
+
+	&.inline{
+		label {
+			font-size:12px;
+		}
+	}
+
+}
+
+.radio-container {
+	width:50%;
+	display: inline-block;
+	.radio-label {
+		display: inline-block;
+		width:100%;
+		padding-right:15px;
+		&.last {
+			padding-right:0;
+		}
+		label {
+			padding-left:50px;
+			text-align: right;
+		}
+	}
+
+	.radio-input {
+		display: inline-block;
+		position:absolute;
+		width: 25%;
+    height: 100%;
+    text-align: right;
+	}
+}
+
+input[type='radio'] {
+    width: 50%;
+    padding: 0;
+    height: 48px;
+    margin: 0;
+}
+
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

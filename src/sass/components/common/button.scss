@@ -1,0 +1,42 @@
+@import 'setup/variables';
+
+.button {
+	width: 100%;
+	padding:12px 24px;
+	background: black;
+	text-align:center;
+	text-transform:uppercase;
+	border:none;
+	border-radius:2px;
+	font-size: 16px;
+	color: $white;
+	letter-spacing: 0.88px;
+	line-height: 16px;
+	margin:30px 0;
+	cursor:pointer;
+
+	&:focus{
+		outline:none;
+	}
+}
+
+.button-green{
+	background: $green;
+	&:hover {
+		background: darken($green, 10);
+	}
+}
+
+.button-blue{
+	background: $blue;
+	&:hover {
+		background: darken($blue, 10);
+	}
+}
+
+.button-red{
+	background: $red;
+	&:hover {
+		background: darken($red, 10);
+	}
+}
