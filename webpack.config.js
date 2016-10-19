@@ -19,9 +19,9 @@ const config = {
 		app	 : ['./js/application.js']
 	},
 	output: {
-		path: path.resolve(__dirname, 'build'),
 		filename: '[name].js',
-		publicPath: '/'
+		path: __dirname + '/dist',
+		publicPath: '/iol-calc/dist/'
 	},
 
 	plugins: [
@@ -34,7 +34,7 @@ const config = {
 		new HtmlWebpackPlugin({
 			title : 'Webpack React Boilerplate',
 			template: './src/templates/index.html',
-			filename: 'index.html',
+			filename: '../index.html',
 			inject:'body'
 		}),
 
