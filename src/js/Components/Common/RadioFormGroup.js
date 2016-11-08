@@ -21,7 +21,6 @@ export default class RadioFormGroup extends Component {
 			 	let key = this.props.name + '-' + option.label + '-' + index;
 
 			 	let last = index === this.props.options.length -1 ? true : false;
-			 	console.log(last);
 
 			 	return(
 			 		<Radio

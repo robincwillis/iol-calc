@@ -9,7 +9,7 @@ export const uuid = () => {
 }
 
 export const updateCaluation = (state) => {
-	console.log(state);
+	//console.log(state);
 }
 
 export const validateInput = (name, value) => {
@@ -65,4 +65,10 @@ export const validateInput = (name, value) => {
 	}
 
 	return valid;
+}
+
+export const getSphericalEquivalent = (sphericalPower, cylinderPower)=> {
+	let a = Number(sphericalPower);
+	let b = Number(cylinderPower);
+	return a + (b/2);
 }

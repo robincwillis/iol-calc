@@ -23,7 +23,7 @@ export default class Input extends Component {
   	})
 
   	if(this.props.action) {
-  		this.props.action(event);
+  		this.props.action(event.target.name, event.target.value);
   	}
   }
 

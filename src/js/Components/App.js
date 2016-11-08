@@ -3,7 +3,7 @@ import InlineSVG from 'svg-inline-react/lib';
 import moment from 'moment';
 
 
-import { uuid, updateCaluation } from 'js/calculator';
+import { uuid, updateCaluation, getSphericalEquivalent } from 'js/calculator';
 
 import FormGroup from 'js/Components/Common/FormGroup';
 import RadioFormGroup from 'js/components/Common/RadioFormGroup';
@@ -21,15 +21,45 @@ export default class App extends Component {
     super(props);
     //Generate random Id
   	this.state = {
-  		id : uuid()
+  		id : uuid(),
+  		sphericalEquivalent : null,
+  		sphericalPower : null
   	}
   }
 
 
   updateState (name, value) {
-  	var state = this.state
+  	console.log('updating state...');
+  	var state = {};//this.state;
   	state[name] = value;
-  	this.setState(state)
+  	//console.log(state);
+  	this.setState(state);
+ 		// this.setState({
+ 		// 	asdf : 'asdf'
+ 		// })
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+  	if(this.state.sphericalPower !== nextState.sphericalPower) {
+  		return true;
+  	}
+  	if(this.state.cylinderPower !== nextState.cylinderPower) {
+  		return true;
+  	}
+  	if(this.state.sphericalEquivalent !== nextState.sphericalEquivalent) {
+  		return true;
+  	}
+  	return false;
+  }
+
+  componentWillUpdate (nextProps, nextState) {
+  	if(nextState.sphericalPower && nextState.cylinderPower) {
+  		let sphericalEquivalent = getSphericalEquivalent(nextState.sphericalPower, nextState.cylinderPower);
+  		this.setState({
+  			sphericalEquivalent : sphericalEquivalent
+  		});
+  	}
+
   }
 
   handleCalculateButtonClick () {
@@ -45,7 +75,7 @@ export default class App extends Component {
 				<div className="row">
 					<div className="col col-6">
 						<header>
-							<h1>IOL Exchange Calulator</h1>
+							<h1>Colvard IOL Exchange Calculator</h1>
 							<h2>MIT License</h2>
 						</header>
 						<div className="row">
@@ -109,29 +139,29 @@ export default class App extends Component {
 							<div className="input">
 								<FormGroup
 									inline={true}
-									name="presentIOLRefractionA"
+									name="sphericalPower"
 									label="+/-"
 									action={this.updateState.bind(this)}
-									value={this.state.presentIOLRefractionA}
+									value={this.state.sphericalPower}
 									type="number"
 									size="in-4"
 								/>
 								<FormGroup
 									inline={true}
-									name="presentIOLRefractionAB"
+									name="cylinderPower"
 									label="+/-"
 									action={this.updateState.bind(this)}
-									value={this.state.presentIOLRefractionB}
+									value={this.state.cylinderPower}
 									type="number"
 									size="in-4"
 								/>
 								<FormGroup
 									inline={true}
 									last={true}
-									name="presentIOLRefractionC"
+									name="sphericalEquivalent"
 									label="X"
 									action={this.updateState.bind(this)}
-									value={this.state.presentIOLRefractionC}
+									value={this.state.sphericalEquivalent}
 									type="number"
 									size="in-4"
 								/>
@@ -170,7 +200,8 @@ export default class App extends Component {
 
 						<div style={{height:'102px'}} className="form-group">
 							<div style={{height:'100%'}} className="label">
-								<label style={{height:'100%'}}>K Reading After IOL</label>
+								<label style={{height:'100%'}}>K Readings After IOL <span className="small">(in diopters)</span></label>
+
 							</div>
 							<div className="input">
 								<FormGroup
