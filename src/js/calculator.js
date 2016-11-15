@@ -10,6 +10,11 @@ export const uuid = () => {
 
 export const updateCaluation = (state) => {
 	//console.log(state);
+	return;
+	let avgK = (state.flatK1 + state.steepK2) / 2;
+	let R = 337.5 / avgK;
+	let rThick = (0.65696-0.02029) * state.axialLength;
+
 }
 
 export const validateInput = (name, value) => {

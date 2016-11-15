@@ -17,10 +17,11 @@
     "url": "https://github.com/robincwillis/NoFavoriteBoilerplate.git"
   },
   "dependencies": {
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
-    "react-addons-css-transition-group": "^0.14.7",
     "classnames": "^2.2.3",
+    "moment": "^2.16.0",
+    "react": "^0.14.6",
+    "react-addons-css-transition-group": "^0.14.7",
+    "react-dom": "^0.14.6",
     "svg-inline-loader": "^0.4.0",
     "svg-inline-react": "^0.3.1",
     "underscore": "^1.8.3",

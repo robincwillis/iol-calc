@@ -22,8 +22,21 @@ export default class App extends Component {
     //Generate random Id
   	this.state = {
   		id : uuid(),
+  		doctorName : 'Hello',
+  		patentName : 'Robin Willis',
+  		presentIOL : 27,
+  		sphericalPower : null,
+  		cylinderPower : -0.5,
+  		unknown : 140,
   		sphericalEquivalent : null,
-  		sphericalPower : null
+  		axialLength : 25,
+  		flatK1 : 43,
+  		flatK1Axis : 149,
+  		steepK2 : 43,
+  		steepK2Axis : 59,
+  		presentIOLAConstant : 116.5,
+  		replacementIOLAConstant : 116.5,
+  		desiredRefaction : -1.25
   	}
   }
 
@@ -37,6 +50,12 @@ export default class App extends Component {
  		// this.setState({
  		// 	asdf : 'asdf'
  		// })
+  }
+
+  componentDidMount () {
+  	this.setState({
+  		sphericalPower : -1.5
+  	})
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -158,10 +177,10 @@ export default class App extends Component {
 								<FormGroup
 									inline={true}
 									last={true}
-									name="sphericalEquivalent"
+									name="unknown"
+									value={this.state.unknown}
 									label="X"
 									action={this.updateState.bind(this)}
-									value={this.state.sphericalEquivalent}
 									type="number"
 									size="in-4"
 								/>
@@ -171,6 +190,7 @@ export default class App extends Component {
 						<FormGroup
 							name="sphericalEquivalent"
 							label="Spherical Equivalent"
+							value={this.state.sphericalEquivalent}
 							action={this.updateState.bind(this)}
 
 						/>
