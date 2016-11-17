@@ -52,7 +52,7 @@ export default class Input extends Component {
 			 		value={this.props.value}
 			 		type={this.props.type}
 			 		placeholder="input"
-			 		/>
+		 		/>
 			</div>
 		)
 	}

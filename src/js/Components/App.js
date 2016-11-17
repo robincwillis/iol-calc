@@ -27,7 +27,7 @@ export default class App extends Component {
   		presentIOL : 27,
   		sphericalPower : null,
   		cylinderPower : -0.5,
-  		unknown : 140,
+  		axisOfStigmatism : 140,
   		sphericalEquivalent : null,
   		axialLength : 25,
   		flatK1 : 43,
@@ -42,14 +42,9 @@ export default class App extends Component {
 
 
   updateState (name, value) {
-  	console.log('updating state...');
-  	var state = {};//this.state;
+  	var state = {};
   	state[name] = value;
-  	//console.log(state);
   	this.setState(state);
- 		// this.setState({
- 		// 	asdf : 'asdf'
- 		// })
   }
 
   componentDidMount () {
@@ -177,8 +172,8 @@ export default class App extends Component {
 								<FormGroup
 									inline={true}
 									last={true}
-									name="unknown"
-									value={this.state.unknown}
+									name="axisOfStigmatism"
+									value={this.state.axisOfStigmatism}
 									label="X"
 									action={this.updateState.bind(this)}
 									type="number"
