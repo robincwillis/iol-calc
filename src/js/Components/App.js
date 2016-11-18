@@ -22,7 +22,7 @@ export default class App extends Component {
     //Generate random Id
   	this.state = {
   		id : uuid(),
-  		doctorName : 'Hello',
+  		doctorName : 'Michael Colvard',
   		patentName : 'Robin Willis',
   		presentIOL : 27,
   		sphericalPower : null,
@@ -77,7 +77,15 @@ export default class App extends Component {
   }
 
   handleCalculateButtonClick () {
-  	updateCaluation(this.state);
+  	let nextState = updateCaluation(this.state);
+
+  	var debug = {};
+  	Object.keys(nextState).forEach( (key)=> {
+  		debug[key] = { value : nextState[key]};
+  	});
+
+  	console.table(debug);
+  	this.setState(nextState);
   }
 
 	render () {

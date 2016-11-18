@@ -9,12 +9,74 @@ export const uuid = () => {
 }
 
 export const updateCaluation = (state) => {
-	//console.log(state);
-	return;
-	let avgK = (state.flatK1 + state.steepK2) / 2;
-	let R = 337.5 / avgK;
-	let rThick = (0.65696-0.02029) * state.axialLength;
 
+	if (state.flatK1 && state.steepK2) {
+		state.avgK = (state.flatK1 + state.steepK2) / 2;
+	} else {
+		state.avgK = null;
+	}
+
+	if (state.avgK) {
+		state.avgCornealRadius = 337.5 / state.avgK;
+	} else {
+		state.avgCornealRadius = null;
+	}
+
+	if (state.axialLength) {
+		state.retThickness = 0.65696 - 0.02029 * state.axialLength;
+	} else {
+		state.retThickness = null;
+	}
+
+	if (state.axialLength && state.retThickness) {
+		state.optAxialLength = state.axialLength + state.retThickness;
+	} else {
+		state.optAxialLength = null;
+	}
+
+	if (state.axialLength) {
+		state.axialLengthCorrected = state.axialLength > 24.2 ? -3.446 + 1.716 * state.axialLength - 0.0237 * ( Math.pow(state.axialLength,2)) : state.axialLength;
+	} else {
+		state.axialLengthCorrected = null;
+	}
+
+	if (state.axialLengthCorrected && state.avgK) {
+		state.cornealWidth = -5.40948 + 0.58412 * state.axialLengthCorrected + 0.098 * state.avgK;
+	} else {
+		state.cornealWidth = null;
+	}
+
+	if (state.avgCornealRadius && state.cornealWidth) {
+		state.cornealHeight =  Math.sqrt( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) < 0 ? 0  : ( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) ))
+	} else {
+		state.cornealHeight = null;
+	}
+
+	if (state.presentIOLAConstant) {
+		state.specificIOLAConstant = state.presentIOLAConstant * 0.62467 - 68.74709;
+	} else {
+		state.specificIOLAConstant = null;
+	}
+
+	if (state.specificIOLAConstant) {
+		state.cornealOffset = state.specificIOLAConstant - 3.3357;
+	} else {
+		state.cornealOffset = null;
+	}
+
+	if (state.cornealHeight && state.cornealOffset) {
+		state.postOperativeACD = state.cornealHeight + state.cornealOffset;
+	} else {
+		state.postOperativeACD = null;
+	}
+
+	if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.intendedIOLPower) {
+		state.desiredRefaction = ( 1000 * 1.336 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) - state.intendedIOLPower * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius -0.333 * state.postOperativeACD )) / (1.336 * (12 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius ) -0.001 * S * (state.optAxialLength - state.postOperativeACD) * (12 * ( 1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD ) + state.postOperativeACD * state.avgCornealRadius ));
+	} else {
+		state.desiredRefaction = null;
+	}
+
+	return state;
 }
 
 export const validateInput = (name, value) => {
