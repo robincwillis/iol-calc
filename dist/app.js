@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "780ae61ef34edc3916a6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3cadbced8fb21f74642a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -20419,6 +20419,7 @@
 
 			_this.state = {
 				id: (0, _calculator.uuid)(),
+				forceUpdate: false,
 				doctorName: 'Michael Colvard',
 				patentName: 'Robin Willis',
 				presentIOL: 27,
@@ -20433,7 +20434,10 @@
 				steepK2Axis: 59,
 				presentIOLAConstant: 116.5,
 				replacementIOLAConstant: 116.5,
-				desiredRefaction: -1.25
+				desiredRefaction: -1.25,
+				replacementIOL: null,
+				presentIOLPosition: null,
+				replacementIOLPosition: null
 			};
 			return _this;
 		}
@@ -20455,13 +20459,55 @@
 		}, {
 			key: 'shouldComponentUpdate',
 			value: function shouldComponentUpdate(nextProps, nextState) {
+				if (nextState.forceUpdate) {
+					return true;
+				}
 				if (this.state.sphericalPower !== nextState.sphericalPower) {
 					return true;
 				}
 				if (this.state.cylinderPower !== nextState.cylinderPower) {
 					return true;
 				}
+				if (this.state.axisOfStigmatism !== nextState.axisOfStigmatism) {
+					return true;
+				}
 				if (this.state.sphericalEquivalent !== nextState.sphericalEquivalent) {
+					return true;
+				}
+				if (this.state.doctorName !== nextState.doctorName) {
+					return true;
+				}
+				if (this.state.patentName !== nextState.patentName) {
+					return true;
+				}
+				if (this.state.presentIOL !== nextState.presentIOL) {
+					return true;
+				}
+				if (this.state.axialLength !== nextState.axialLength) {
+					return true;
+				}
+				if (this.state.flatK1 !== nextState.flatK1) {
+					return true;
+				}
+				if (this.state.flatK1Axis !== nextState.flatK1Axis) {
+					return true;
+				}
+				if (this.state.steepK2 !== nextState.steepK2) {
+					return true;
+				}
+				if (this.state.steepK2Axis !== nextState.steepK2Axis) {
+					return true;
+				}
+				if (this.state.presentIOLAConstant !== nextState.presentIOLAConstant) {
+					return true;
+				}
+				if (this.state.replacementIOLAConstant !== nextState.replacementIOLAConstant) {
+					return true;
+				}
+				if (this.state.desiredRefaction !== nextState.desiredRefaction) {
+					return true;
+				}
+				if (this.state.replacementIOL !== nextState.replacementIOL) {
 					return true;
 				}
 				return false;
@@ -20477,10 +20523,17 @@
 				}
 			}
 		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {
+				this.setState({
+					forceUpdate: false
+				});
+			}
+		}, {
 			key: 'handleCalculateButtonClick',
 			value: function handleCalculateButtonClick() {
 				var nextState = (0, _calculator.updateCaluation)(this.state);
-
+				nextState.forceUpdate = true;
 				var debug = {};
 				Object.keys(nextState).forEach(function (key) {
 					debug[key] = { value: nextState[key] };
@@ -31873,10 +31926,11 @@
 			state.postOperativeACD = null;
 		}
 
-		if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.intendedIOLPower) {
-			state.desiredRefaction = (1000 * 1.336 * (1.336 * state.avgCornealRadius - 0.333 * state.optAxialLength) - state.intendedIOLPower * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD)) / (1.336 * (12 * (1.336 * state.avgCornealRadius - 0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius) - 0.001 * S * (state.optAxialLength - state.postOperativeACD) * (12 * (1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD) + state.postOperativeACD * state.avgCornealRadius));
+		if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.presentIOL) {
+			var replacementIOL = (1000 * 1.336 * (1.336 * state.avgCornealRadius - 0.333 * state.optAxialLength) - state.presentIOL * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD)) / (1.336 * (12 * (1.336 * state.avgCornealRadius - 0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius) - 0.001 * state.presentIOL * (state.optAxialLength - state.postOperativeACD) * (12 * (1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD) + state.postOperativeACD * state.avgCornealRadius));
+			state.replacementIOL = Number(replacementIOL.toFixed(2));
 		} else {
-			state.desiredRefaction = null;
+			state.replacementIOL = null;
 		}
 
 		return state;
@@ -31928,7 +31982,7 @@
 				break;
 			case 'presentIOLAConstant':
 			case 'replacementIOLAConstant':
-				if (value > 119.5 || value < 117.5) {
+				if (value > 119.5 || value < 115.5) {
 					valid = false;
 				}
 				break;
@@ -32026,7 +32080,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32046,69 +32100,73 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Input = function (_Component) {
-		_inherits(Input, _Component);
+	  _inherits(Input, _Component);
 
-		function Input(props) {
-			_classCallCheck(this, Input);
+	  function Input(props) {
+	    _classCallCheck(this, Input);
 
-			//Generate random Id
-			var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
+	    //Generate random Id
+	    var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
-			_this.state = {
-				valid: true,
-				empty: true
-			};
-			return _this;
-		}
+	    _this.state = {
+	      valid: true,
+	      empty: true
+	    };
+	    return _this;
+	  }
 
-		_createClass(Input, [{
-			key: 'handleOnChange',
-			value: function handleOnChange(event) {
-				var empty = event.target.value.length === 0 ? true : false;
-				var valid = (0, _calculator.validateInput)(event.target.name, event.target.value);
-				valid = empty ? true : valid;
-				this.setState({
-					empty: empty,
-					valid: valid
-				});
+	  _createClass(Input, [{
+	    key: 'handleOnChange',
+	    value: function handleOnChange(event) {
+	      var empty = event.target.value.length === 0 ? true : false;
+	      var valid = (0, _calculator.validateInput)(event.target.name, event.target.value);
+	      valid = empty ? true : valid;
+	      this.setState({
+	        empty: empty,
+	        valid: valid
+	      });
 
-				if (this.props.action) {
-					this.props.action(event.target.name, event.target.value);
-				}
-			}
-		}, {
-			key: 'validate',
-			value: function validate(name, value) {}
-		}, {
-			key: 'render',
-			value: function render() {
-				var className = '';
-				if (this.state.empty) {
-					className += ' empty';
-				}
+	      if (this.props.action) {
+	        var value = event.target.value;
+	        if (event.target.type === 'number') {
+	          value = Number(value);
+	        }
+	        this.props.action(event.target.name, value);
+	      }
+	    }
+	  }, {
+	    key: 'validate',
+	    value: function validate(name, value) {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var className = '';
+	      if (this.state.empty) {
+	        className += ' empty';
+	      }
 
-				if (this.state.valid) {
-					className += ' valid';
-				} else {
-					className += ' error';
-				}
+	      if (this.state.valid) {
+	        className += ' valid';
+	      } else {
+	        className += ' error';
+	      }
 
-				return _react2.default.createElement(
-					'div',
-					{ className: "input-container" + className },
-					_react2.default.createElement('div', { className: 'input-status' }),
-					_react2.default.createElement('input', {
-						name: this.props.name,
-						onChange: this.handleOnChange.bind(this),
-						value: this.props.value,
-						type: this.props.type,
-						placeholder: 'input'
-					})
-				);
-			}
-		}]);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: "input-container" + className },
+	        _react2.default.createElement('div', { className: 'input-status' }),
+	        _react2.default.createElement('input', {
+	          name: this.props.name,
+	          onChange: this.handleOnChange.bind(this),
+	          value: this.props.value,
+	          type: this.props.type,
+	          placeholder: this.props.placeholder
+	        })
+	      );
+	    }
+	  }]);
 
-		return Input;
+	  return Input;
 	}(_react.Component);
 
 	exports.default = Input;

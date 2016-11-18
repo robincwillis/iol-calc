@@ -70,10 +70,11 @@ export const updateCaluation = (state) => {
 		state.postOperativeACD = null;
 	}
 
-	if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.intendedIOLPower) {
-		state.desiredRefaction = ( 1000 * 1.336 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) - state.intendedIOLPower * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius -0.333 * state.postOperativeACD )) / (1.336 * (12 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius ) -0.001 * S * (state.optAxialLength - state.postOperativeACD) * (12 * ( 1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD ) + state.postOperativeACD * state.avgCornealRadius ));
+	if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.presentIOL) {
+		let replacementIOL = ( 1000 * 1.336 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) - state.presentIOL * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius -0.333 * state.postOperativeACD )) / (1.336 * (12 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius ) -0.001 * state.presentIOL * (state.optAxialLength - state.postOperativeACD) * (12 * ( 1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD ) + state.postOperativeACD * state.avgCornealRadius ));
+		state.replacementIOL = Number(replacementIOL.toFixed(2));
 	} else {
-		state.desiredRefaction = null;
+		state.replacementIOL = null;
 	}
 
 	return state;
@@ -125,7 +126,7 @@ export const validateInput = (name, value) => {
 			break;
 		case 'presentIOLAConstant':
 		case 'replacementIOLAConstant':
-			if( value > 119.5 || value < 117.5) {
+			if( value > 119.5 || value < 115.5) {
 				valid = false
 			}
 			break;

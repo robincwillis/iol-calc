@@ -23,7 +23,11 @@ export default class Input extends Component {
   	})
 
   	if(this.props.action) {
-  		this.props.action(event.target.name, event.target.value);
+  		let value = event.target.value;
+   		if(event.target.type === 'number') {
+  			value = Number(value);
+  		}
+  		this.props.action(event.target.name, value);
   	}
   }
 
@@ -51,7 +55,7 @@ export default class Input extends Component {
 			 		onChange={this.handleOnChange.bind(this)}
 			 		value={this.props.value}
 			 		type={this.props.type}
-			 		placeholder="input"
+			 		placeholder={this.props.placeholder}
 		 		/>
 			</div>
 		)

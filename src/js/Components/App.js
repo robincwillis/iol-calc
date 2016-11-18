@@ -18,75 +18,126 @@ import 'sass/components/common/input';
 export default class App extends Component {
 
 	constructor (props) {
-    super(props);
-    //Generate random Id
-  	this.state = {
-  		id : uuid(),
-  		doctorName : 'Michael Colvard',
-  		patentName : 'Robin Willis',
-  		presentIOL : 27,
-  		sphericalPower : null,
-  		cylinderPower : -0.5,
-  		axisOfStigmatism : 140,
-  		sphericalEquivalent : null,
-  		axialLength : 25,
-  		flatK1 : 43,
-  		flatK1Axis : 149,
-  		steepK2 : 43,
-  		steepK2Axis : 59,
-  		presentIOLAConstant : 116.5,
-  		replacementIOLAConstant : 116.5,
-  		desiredRefaction : -1.25
-  	}
-  }
+		super(props);
+		//Generate random Id
+		this.state = {
+			id : uuid(),
+			forceUpdate : false,
+			doctorName : 'Michael Colvard',
+			patentName : 'Robin Willis',
+			presentIOL : 27,
+			sphericalPower : null,
+			cylinderPower : -0.5,
+			axisOfStigmatism : 140,
+			sphericalEquivalent : null,
+			axialLength : 25,
+			flatK1 : 43,
+			flatK1Axis : 149,
+			steepK2 : 43,
+			steepK2Axis : 59,
+			presentIOLAConstant : 116.5,
+			replacementIOLAConstant : 116.5,
+			desiredRefaction : -1.25,
+			replacementIOL : null,
+			presentIOLPosition : null,
+			replacementIOLPosition : null
+		}
+	}
 
 
-  updateState (name, value) {
-  	var state = {};
-  	state[name] = value;
-  	this.setState(state);
-  }
+	updateState (name, value) {
+		var state = {};
+		state[name] = value;
+		this.setState(state);
+	}
 
-  componentDidMount () {
-  	this.setState({
-  		sphericalPower : -1.5
-  	})
-  }
+	componentDidMount () {
+		this.setState({
+			sphericalPower : -1.5
+		})
+	}
 
-  shouldComponentUpdate (nextProps, nextState) {
-  	if(this.state.sphericalPower !== nextState.sphericalPower) {
-  		return true;
-  	}
-  	if(this.state.cylinderPower !== nextState.cylinderPower) {
-  		return true;
-  	}
-  	if(this.state.sphericalEquivalent !== nextState.sphericalEquivalent) {
-  		return true;
-  	}
-  	return false;
-  }
+	shouldComponentUpdate (nextProps, nextState) {
+		if(nextState.forceUpdate) {
+			return true;
+		}
+		if(this.state.sphericalPower !== nextState.sphericalPower) {
+			return true;
+		}
+		if(this.state.cylinderPower !== nextState.cylinderPower) {
+			return true;
+		}
+		if(this.state.axisOfStigmatism !== nextState.axisOfStigmatism) {
+			return true;
+		}
+		if(this.state.sphericalEquivalent !== nextState.sphericalEquivalent) {
+			return true;
+		}
+		if(this.state.doctorName !== nextState.doctorName) {
+			return true;
+		}
+		if(this.state.patentName !== nextState.patentName) {
+			return true;
+		}
+		if(this.state.presentIOL !== nextState.presentIOL) {
+			return true;
+		}
+		if(this.state.axialLength !== nextState.axialLength) {
+			return true;
+		}
+		if(this.state.flatK1 !== nextState.flatK1) {
+			return true;
+		}
+		if(this.state.flatK1Axis !== nextState.flatK1Axis) {
+			return true;
+		}
+		if(this.state.steepK2 !== nextState.steepK2) {
+			return true;
+		}
+		if(this.state.steepK2Axis !== nextState.steepK2Axis) {
+			return true;
+		}
+		if(this.state.presentIOLAConstant !== nextState.presentIOLAConstant) {
+			return true;
+		}
+		if(this.state.replacementIOLAConstant !== nextState.replacementIOLAConstant) {
+			return true;
+		}
+		if(this.state.desiredRefaction !== nextState.desiredRefaction) {
+			return true;
+		}
+		if(this.state.replacementIOL !== nextState.replacementIOL) {
+			return true;
+		}
+		return false;
+	}
 
-  componentWillUpdate (nextProps, nextState) {
-  	if(nextState.sphericalPower && nextState.cylinderPower) {
-  		let sphericalEquivalent = getSphericalEquivalent(nextState.sphericalPower, nextState.cylinderPower);
-  		this.setState({
-  			sphericalEquivalent : sphericalEquivalent
-  		});
-  	}
+	componentWillUpdate (nextProps, nextState) {
+		if(nextState.sphericalPower && nextState.cylinderPower) {
+			let sphericalEquivalent = getSphericalEquivalent(nextState.sphericalPower, nextState.cylinderPower);
+			this.setState({
+				sphericalEquivalent : sphericalEquivalent
+			});
+		}
+	}
 
-  }
+	componentDidUpdate () {
+		this.setState({
+			forceUpdate : false
+		});
+	}
 
-  handleCalculateButtonClick () {
-  	let nextState = updateCaluation(this.state);
+	handleCalculateButtonClick () {
+		let nextState = updateCaluation(this.state);
+		nextState.forceUpdate = true;
+		var debug = {};
+		Object.keys(nextState).forEach( (key)=> {
+			debug[key] = { value : nextState[key]};
+		});
 
-  	var debug = {};
-  	Object.keys(nextState).forEach( (key)=> {
-  		debug[key] = { value : nextState[key]};
-  	});
-
-  	console.table(debug);
-  	this.setState(nextState);
-  }
+		console.table(debug);
+		this.setState(nextState);
+	}
 
 	render () {
 
@@ -103,16 +154,16 @@ export default class App extends Component {
 						<div className="row">
 							<div className="col col-6">
 								<FormGroup
-								name="date"
-								label="Date"
-								value={moment(new Date()).format('DD-MM-YYYY')}
-								readOnly={true}
-								type="text"
-								size="small"
-							/>
+									name="date"
+									label="Date"
+									value={moment(new Date()).format('DD-MM-YYYY')}
+									readOnly={true}
+									type="text"
+									size="small"
+								/>
 							</div>
 							<div className="col col-6">
-									<FormGroup
+								<FormGroup
 									name="id"
 									label="Id"
 									value={this.state.id}
@@ -122,8 +173,6 @@ export default class App extends Component {
 								/>
 							</div>
 						</div>
-
-
 						<FormGroup
 							name="doctorName"
 							action={this.updateState.bind(this)}
