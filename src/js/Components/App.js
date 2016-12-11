@@ -3,12 +3,13 @@ import InlineSVG from 'svg-inline-react/lib';
 import moment from 'moment';
 
 
-import { uuid, updateCaluation, getSphericalEquivalent } from 'js/calculator';
+import { uuid, updateCalcuation, getSphericalEquivalent } from 'js/calculator';
 
 import FormGroup from 'js/Components/Common/FormGroup';
 import RadioFormGroup from 'js/components/Common/RadioFormGroup';
 import Graph from 'js/Components/Common/Graph';
 import Button from 'js/Components/Common/Button';
+
 
 import 'sass/setup/reset';
 import 'sass/components/app';
@@ -25,19 +26,21 @@ export default class App extends Component {
 			forceUpdate : false,
 			doctorName : 'Michael Colvard',
 			patentName : 'Robin Willis',
-			presentIOL : 27,
+			presentIOL : 17,
 			sphericalPower : null,
-			cylinderPower : -0.5,
-			axisOfStigmatism : 140,
+			cylinderPower : -0.75,
+			axisOfStigmatism : 100,
 			sphericalEquivalent : null,
 			axialLength : 25,
 			flatK1 : 43,
 			flatK1Axis : 149,
 			steepK2 : 43,
 			steepK2Axis : 59,
-			presentIOLAConstant : 116.5,
-			replacementIOLAConstant : 116.5,
-			desiredRefaction : -1.25,
+			presentIOLAConstant : 119.3,
+			replacementIOLAConstant : 119.3,
+			desiredRefaction : null,
+			emmetropiaIOLPower : null,
+			ametropiaIOLPower : null,
 			replacementIOL : null,
 			presentIOLPosition : null,
 			replacementIOLPosition : null
@@ -52,9 +55,11 @@ export default class App extends Component {
 	}
 
 	componentDidMount () {
-		this.setState({
-			sphericalPower : -1.5
-		})
+		let state = this.state;
+		state.sphericalPower = 1.25;
+		let nextState = updateCalcuation(this.state);
+		nextState.forceUpdate = true;
+		this.setState(nextState);
 	}
 
 	shouldComponentUpdate (nextProps, nextState) {
@@ -109,6 +114,9 @@ export default class App extends Component {
 		if(this.state.replacementIOL !== nextState.replacementIOL) {
 			return true;
 		}
+
+		console.log('dont update component');
+
 		return false;
 	}
 
@@ -128,14 +136,14 @@ export default class App extends Component {
 	}
 
 	handleCalculateButtonClick () {
-		let nextState = updateCaluation(this.state);
+		let nextState = updateCalcuation(this.state);
 		nextState.forceUpdate = true;
 		var debug = {};
 		Object.keys(nextState).forEach( (key)=> {
 			debug[key] = { value : nextState[key]};
 		});
 
-		console.table(debug);
+		//console.table(debug);
 		this.setState(nextState);
 	}
 
@@ -189,7 +197,7 @@ export default class App extends Component {
 						/>
 					</div>
 					<div className="col col-6">
-							<Graph />
+							<Graph {...this.state} />
 					</div>
 				</div>
 				<div className="row">
