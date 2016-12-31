@@ -10,6 +10,9 @@ export default class Chart extends Component {
 
  getGraphState () {
  		console.log(this.props.sphericalEquivalent);
+ 		console.log(this.props.presentIOL);
+ 		console.log(this.props.cylinderPower);
+ 		console.log(this.props.replacementIOL);
 
 		// var data = this.props.results.map ( (result) => {
 		// 	var key = Object.keys(result)[0];
@@ -77,19 +80,26 @@ export default class Chart extends Component {
 
 	componentDidMount () {
 		var el = ReactDOM.findDOMNode(this);
+		console.log(el.offsetWidth);
 		d3Graph.create(el, {
-			width: '100%',
-			height: '22px'
+			width: el.offsetWidth,
+			height: el.offsetHeight,
 		}, this.getGraphState());
 	}
 
-	ComponentWillRecieveProps(nextProps) {
-		console.log('got Props');
-		//this.getGraphState();
+	componentWillReceiveProps(nextProps) {
+		console.log('graph got props');
+		var el = ReactDOM.findDOMNode(this);
+		el.innerHTML = '';
+
+		d3Graph.update(el, {
+			width: el.offsetWidth,
+			height: el.offsetHeight,
+		}, this.getGraphState());
 	}
 
 	render () {
-		d3Graph.update(this.testGraphState())
+		console.log('render graph');
 		return (
 			<div className="graph"></div>
 		);

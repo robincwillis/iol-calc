@@ -150,8 +150,17 @@ export const validateInput = (name, value) => {
 	return valid;
 }
 
-export const getSphericalEquivalent = (sphericalPower, cylinderPower)=> {
+export const getSphericalEquivalent = (sphericalPower, cylinderPower, sphericalPowerSign, cylinderPowerSign)=> {
 	let a = Number(sphericalPower);
 	let b = Number(cylinderPower);
+
+	if(sphericalPowerSign === false) {
+		a = a * -1;
+	}
+
+	if(cylinderPowerSign === false) {
+		b = b * -1;
+	}
+
 	return a + (b/2);
 }

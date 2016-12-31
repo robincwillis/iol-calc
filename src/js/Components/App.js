@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import InlineSVG from 'svg-inline-react/lib';
 import moment from 'moment';
 
 
@@ -9,12 +8,13 @@ import FormGroup from 'js/Components/Common/FormGroup';
 import RadioFormGroup from 'js/components/Common/RadioFormGroup';
 import Graph from 'js/Components/Common/Graph';
 import Button from 'js/Components/Common/Button';
-
+import Toggle from 'react-toggle';
 
 import 'sass/setup/reset';
 import 'sass/components/app';
 import 'sass/components/common/form_group';
 import 'sass/components/common/input';
+import 'sass/components/common/toggle';
 
 export default class App extends Component {
 
@@ -28,7 +28,9 @@ export default class App extends Component {
 			patentName : 'Robin Willis',
 			presentIOL : 17,
 			sphericalPower : null,
-			cylinderPower : -0.75,
+			sphericalPowerSign : true,
+			cylinderPower : 0.75,
+			cylinderPowerSign : false,
 			axisOfStigmatism : 100,
 			sphericalEquivalent : null,
 			axialLength : 25,
@@ -54,6 +56,10 @@ export default class App extends Component {
 		this.setState(state);
 	}
 
+	handleToggle (event) {
+		this.updateState(event.target.name, event.target.checked)
+	}
+
 	componentDidMount () {
 		let state = this.state;
 		state.sphericalPower = 1.25;
@@ -63,13 +69,24 @@ export default class App extends Component {
 	}
 
 	shouldComponentUpdate (nextProps, nextState) {
+
+		console.log(this.state.sphericalEquivalent);
+		console.log(nextState.sphericalEquivalent);
+
 		if(nextState.forceUpdate) {
 			return true;
 		}
+
 		if(this.state.sphericalPower !== nextState.sphericalPower) {
 			return true;
 		}
 		if(this.state.cylinderPower !== nextState.cylinderPower) {
+			return true;
+		}
+		if(this.state.sphericalPowerSign !== nextState.sphericalPowerSign) {
+			return true;
+		}
+		if(this.state.cylinderPowerSign !== nextState.cylinderPowerSign) {
 			return true;
 		}
 		if(this.state.axisOfStigmatism !== nextState.axisOfStigmatism) {
@@ -122,7 +139,7 @@ export default class App extends Component {
 
 	componentWillUpdate (nextProps, nextState) {
 		if(nextState.sphericalPower && nextState.cylinderPower) {
-			let sphericalEquivalent = getSphericalEquivalent(nextState.sphericalPower, nextState.cylinderPower);
+			let sphericalEquivalent = getSphericalEquivalent(nextState.sphericalPower, nextState.cylinderPower, nextState.sphericalPowerSign, nextState.cylinderPowerSign);
 			this.setState({
 				sphericalEquivalent : sphericalEquivalent
 			});
@@ -150,6 +167,8 @@ export default class App extends Component {
 	render () {
 
 		let radioOptions = [{label:'Bag', value:1}, {label:'Sulcus', value:2}];
+		console.log('render app');
+		console.log(this.state.replacementIOL);
 
 		return (
 			<div className="root-container">
@@ -216,19 +235,37 @@ export default class App extends Component {
 								<label>Refraction With Present IOL</label>
 							</div>
 							<div className="input">
+								<Toggle
+									name="sphericalPowerSign"
+									className='spherical-power-toggle'
+									defaultChecked={this.state.sphericalPowerSign}
+									onChange={this.handleToggle.bind(this)}
+									icons={{
+										checked: '+',
+										unchecked: '-',
+									}}
+								/>
 								<FormGroup
 									inline={true}
 									name="sphericalPower"
-									label="+/-"
 									action={this.updateState.bind(this)}
 									value={this.state.sphericalPower}
 									type="number"
 									size="in-4"
 								/>
+								<Toggle
+									name="cylinderPowerSign"
+									className='cylinder-power-toggle'
+									defaultChecked={this.state.cylinderPowerSign}
+									onChange={this.handleToggle.bind(this)}
+									icons={{
+										checked: '+',
+										unchecked: '-',
+									}}
+								/>
 								<FormGroup
 									inline={true}
 									name="cylinderPower"
-									label="+/-"
 									action={this.updateState.bind(this)}
 									value={this.state.cylinderPower}
 									type="number"

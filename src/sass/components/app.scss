@@ -67,9 +67,20 @@ header {
 
 
 .graph {
-  width:100%;
+  width:calc(100%-10px);
   background:$white;
   height:220px;
-  margin-bottom:20px;
-  border: 1px solid $dark-gray;
+  margin-bottom:30px;
+  margin-left:10px;
+  border-top: 1px solid $dark-gray;
+  border-right: 1px solid $dark-gray;
+  svg {
+    margin-top:-1px;
+    overflow: visible;
+    .tick {
+      line {
+        opacity: 0.25;
+      }
+    }
+  }
 }

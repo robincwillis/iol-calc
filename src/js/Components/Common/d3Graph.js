@@ -3,45 +3,40 @@ import * as d3 from "d3";
 
 var d3Graph = {};
 
-d3Graph.create = function(el, props, state) {
-
+d3Graph.update = function(el, props, state) {
+	console.log('update graph');
 	var data = state.data;
+	var margin = {top: 10, right: 20, bottom: 10, left: 20}
 
-	var margin = {top: 20, right: 20, bottom: 20, left: 20}
+var margin = {top: 0, right: 0, bottom: 0, left: 0}
 
-	 // width = 960 - margin.left - margin.right,
-	 // height = 500 - margin.top - margin.bottom;
 
 	var axisMargin = 20;
 	//var margin = 80;
 	var valueMargin = 14;
 
-	var height = 180;
-	var width = 300;
+	var height = props.height - margin.top - margin.bottom;
+	var width = props.width - margin.right - margin.left;
 
 	var xScale = d3.scaleLinear()
-			//.domain([0, d3.max(data, function(d){ return d.point.x; })])
-			.domain([-20,20])
-			.range([0, width]);
+			.domain([d3.min(data, function(d){ return d.point.x; })-1, d3.max(data, function(d){ return d.point.x; })+1])
+			.range([0, width-1]);
 
 	var yScale = d3.scaleLinear()
-			//.domain([0, d3.max(data, function(d){ return d.point.y; })])
-			.domain([-2,2])
+			.domain([d3.min(data, function(d){ return d.point.y; })-1, d3.max(data, function(d){ return d.point.y; })+1])
 			.range([height, 0]);
 
 	var xAxis = d3.axisBottom()
 			.scale(xScale)
-			.ticks(10)
-			.tickSizeInner(-height);
+			.ticks(5)
+			.tickPadding(10)
+			.tickSizeInner(-height-1);
 
 	var yAxis = d3.axisLeft()
 			.scale(yScale)
-			.tickSizeInner(-width)
-
-	var x = d3.scaleLinear()
-		//.domain([0, d3.max(state.data)])
-		.domain([0,1000])
-		.range([0, 420]);
+			.ticks(5)
+			.tickPadding(10)
+			.tickSizeInner(-width-1)
 
 	var svg = d3.select(el).append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -74,19 +69,19 @@ d3Graph.create = function(el, props, state) {
 	 })
 	 .attr("r", 5);
 
-};
-
-
-d3Graph.update = function(state) {
-	var data = state.data;
-	console.log(d3Graph.test);
-	if(d3Graph.test){
-		console.log('update graph');
-		d3Graph.test.data(data);
-	}
-
-
 }
+
+d3Graph.create = function(el, props, state) {
+
+	console.log('create graph');
+
+	var data = state.data;
+
+	d3Graph.update(el, props, state);
+
+	return;
+
+};
 
 
 export default d3Graph;
