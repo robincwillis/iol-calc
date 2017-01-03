@@ -9,10 +9,10 @@ export default class Chart extends Component {
 
 
  getGraphState () {
- 		console.log(this.props.sphericalEquivalent);
- 		console.log(this.props.presentIOL);
- 		console.log(this.props.cylinderPower);
- 		console.log(this.props.replacementIOL);
+ 		// console.log(this.props.sphericalEquivalent);
+ 		// console.log(this.props.presentIOL);
+ 		// console.log(this.props.cylinderPower);
+ 		// console.log(this.props.replacementIOL);
 
 		// var data = this.props.results.map ( (result) => {
 		// 	var key = Object.keys(result)[0];
@@ -24,7 +24,7 @@ export default class Chart extends Component {
 
 		var a = {
 			x : this.props.presentIOL,
-			y: this.props.cylinderPower + this.props.sphericalEquivalent
+			y: this.props.cylinderPower // + this.props.sphericalEquivalent
 		};
 
 		var b = {
@@ -37,7 +37,7 @@ export default class Chart extends Component {
 			y: this.props.cylinderPower
 		};
 
-		console.log([{point:a},{point:b},{point:c}]);
+		//console.log([{point:a},{point:b},{point:c}]);
 
 		return {
 			data: [{point:a},{point:b},{point:c}],
@@ -70,7 +70,7 @@ export default class Chart extends Component {
 			y: 0
 		};
 
-		console.log([{point:a},{point:b},{point:c}]);
+		//console.log([{point:a},{point:b},{point:c}]);
 
 		return {
 			data: [{point:a},{point:b},{point:c}],
@@ -80,7 +80,7 @@ export default class Chart extends Component {
 
 	componentDidMount () {
 		var el = ReactDOM.findDOMNode(this);
-		console.log(el.offsetWidth);
+
 		d3Graph.create(el, {
 			width: el.offsetWidth,
 			height: el.offsetHeight,
@@ -88,7 +88,7 @@ export default class Chart extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('graph got props');
+
 		var el = ReactDOM.findDOMNode(this);
 		el.innerHTML = '';
 
@@ -99,7 +99,7 @@ export default class Chart extends Component {
 	}
 
 	render () {
-		console.log('render graph');
+
 		return (
 			<div className="graph"></div>
 		);

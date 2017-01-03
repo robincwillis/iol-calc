@@ -47,6 +47,8 @@ export default class Input extends Component {
 			className += ' error';
 		}
 
+    //console.log(this.props.value);
+
 		return (
 			<div className={"input-container" + className}>
 			 	<div className="input-status"></div>

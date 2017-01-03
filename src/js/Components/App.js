@@ -20,26 +20,53 @@ export default class App extends Component {
 
 	constructor (props) {
 		super(props);
-		//Generate random Id
+		// For Debug
+		// this.state = {
+		// 	id : uuid(),
+		// 	forceUpdate : false,
+		// 	doctorName : 'Michael Colvard',
+		// 	patentName : 'Robin Willis',
+		// 	presentIOL : 17,
+		// 	sphericalPower : null,
+		// 	sphericalPowerSign : true,
+		// 	cylinderPower : 0.75,
+		// 	cylinderPowerSign : false,
+		// 	axisOfStigmatism : 100,
+		// 	sphericalEquivalent : null,
+		// 	axialLength : 25,
+		// 	flatK1 : 43,
+		// 	flatK1Axis : 149,
+		// 	steepK2 : 43,
+		// 	steepK2Axis : 59,
+		// 	presentIOLAConstant : 119.3,
+		// 	replacementIOLAConstant : 119.3,
+		// 	desiredRefaction : null,
+		// 	emmetropiaIOLPower : null,
+		// 	ametropiaIOLPower : null,
+		// 	replacementIOL : null,
+		// 	presentIOLPosition : null,
+		// 	replacementIOLPosition : null
+		// }
+
 		this.state = {
 			id : uuid(),
 			forceUpdate : false,
 			doctorName : 'Michael Colvard',
 			patentName : 'Robin Willis',
-			presentIOL : 17,
+			presentIOL : null,
 			sphericalPower : null,
 			sphericalPowerSign : true,
-			cylinderPower : 0.75,
+			cylinderPower : null,
 			cylinderPowerSign : false,
-			axisOfStigmatism : 100,
+			axisOfStigmatism : null,
 			sphericalEquivalent : null,
-			axialLength : 25,
-			flatK1 : 43,
-			flatK1Axis : 149,
-			steepK2 : 43,
-			steepK2Axis : 59,
-			presentIOLAConstant : 119.3,
-			replacementIOLAConstant : 119.3,
+			axialLength : null,
+			flatK1 : null,
+			flatK1Axis : null,
+			steepK2 : null,
+			steepK2Axis : null,
+			presentIOLAConstant : null,
+			replacementIOLAConstant : null,
 			desiredRefaction : null,
 			emmetropiaIOLPower : null,
 			ametropiaIOLPower : null,
@@ -61,17 +88,17 @@ export default class App extends Component {
 	}
 
 	componentDidMount () {
-		let state = this.state;
-		state.sphericalPower = 1.25;
-		let nextState = updateCalcuation(this.state);
-		nextState.forceUpdate = true;
-		this.setState(nextState);
+		//let state = this.state;
+		//state.sphericalPower = 1.25;
+		//let nextState = updateCalcuation(this.state);
+		//nextState.forceUpdate = true;
+		//this.setState(nextState);
 	}
 
 	shouldComponentUpdate (nextProps, nextState) {
 
-		console.log(this.state.sphericalEquivalent);
-		console.log(nextState.sphericalEquivalent);
+		// console.log(this.state.sphericalEquivalent);
+		// console.log(nextState.sphericalEquivalent);
 
 		if(nextState.forceUpdate) {
 			return true;
@@ -216,7 +243,9 @@ export default class App extends Component {
 						/>
 					</div>
 					<div className="col col-6">
+						{this.state.sphericalEquivalent && this.state.presentIOL && this.state.cylinderPower && this.state.replacementIOL ? (
 							<Graph {...this.state} />
+							) : (<div className="graph" />)   }
 					</div>
 				</div>
 				<div className="row">
