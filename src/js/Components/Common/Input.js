@@ -57,6 +57,7 @@ export default class Input extends Component {
 			 		onChange={this.handleOnChange.bind(this)}
 			 		value={this.props.value}
 			 		type={this.props.type}
+          step="any"
 			 		placeholder={this.props.placeholder}
 		 		/>
 			</div>
