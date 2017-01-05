@@ -24,9 +24,10 @@ export default class Input extends Component {
 
   	if(this.props.action) {
   		let value = event.target.value;
-   		if(event.target.type === 'number') {
+   		if(event.target.type === 'number' && event.target.value.length !== 0) {
   			value = Number(value);
   		}
+
   		this.props.action(event.target.name, value);
   	}
   }
@@ -47,7 +48,10 @@ export default class Input extends Component {
 			className += ' error';
 		}
 
-    //console.log(this.props.value);
+    let value = this.props.value;
+    if(value === null) {
+      value = ''
+    }
 
 		return (
 			<div className={"input-container" + className}>
@@ -55,7 +59,7 @@ export default class Input extends Component {
 			 	<input
 			 		name={this.props.name}
 			 		onChange={this.handleOnChange.bind(this)}
-			 		value={this.props.value}
+			 		value={value}
 			 		type={this.props.type}
           step="any"
 			 		placeholder={this.props.placeholder}

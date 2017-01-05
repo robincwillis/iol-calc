@@ -81,6 +81,7 @@ export default class App extends Component {
 		var state = {};
 		state[name] = value;
 		this.setState(state);
+
 	}
 
 	handleToggle (event) {
@@ -174,6 +175,7 @@ export default class App extends Component {
 	}
 
 	componentDidUpdate () {
+		updateCalcuation(this.state);
 		this.setState({
 			forceUpdate : false
 		});
@@ -194,8 +196,8 @@ export default class App extends Component {
 	render () {
 
 		let radioOptions = [{label:'Bag', value:1}, {label:'Sulcus', value:2}];
-		console.log('render app');
-		console.log(this.state.replacementIOL);
+		//console.log('render app');
+		//console.log(this.state.replacementIOL);
 
 		return (
 			<div className="root-container">

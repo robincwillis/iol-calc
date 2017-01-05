@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "650252c82e69f833259d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7dc194b88189f6097c3b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22294,6 +22294,7 @@
 		}, {
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate() {
+				(0, _calculator.updateCalcuation)(this.state);
 				this.setState({
 					forceUpdate: false
 				});
@@ -22316,8 +22317,8 @@
 			value: function render() {
 
 				var radioOptions = [{ label: 'Bag', value: 1 }, { label: 'Sulcus', value: 2 }];
-				console.log('render app');
-				console.log(this.state.replacementIOL);
+				//console.log('render app');
+				//console.log(this.state.replacementIOL);
 
 				return _react2.default.createElement(
 					'div',
@@ -37673,9 +37674,10 @@
 
 	      if (this.props.action) {
 	        var value = event.target.value;
-	        if (event.target.type === 'number') {
+	        if (event.target.type === 'number' && event.target.value.length !== 0) {
 	          value = Number(value);
 	        }
+
 	        this.props.action(event.target.name, value);
 	      }
 	    }
@@ -37696,7 +37698,10 @@
 	        className += ' error';
 	      }
 
-	      //console.log(this.props.value);
+	      var value = this.props.value;
+	      if (value === null) {
+	        value = '';
+	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -37705,7 +37710,7 @@
 	        _react2.default.createElement('input', {
 	          name: this.props.name,
 	          onChange: this.handleOnChange.bind(this),
-	          value: this.props.value,
+	          value: value,
 	          type: this.props.type,
 	          step: 'any',
 	          placeholder: this.props.placeholder
@@ -37855,7 +37860,7 @@
 
 				return _react2.default.createElement(
 					'div',
-					{ key: this.props.key, className: 'radio-container' },
+					{ className: 'radio-container' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'radio-input' },
