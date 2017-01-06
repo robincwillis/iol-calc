@@ -189,7 +189,7 @@ export default class App extends Component {
 			debug[key] = { value : nextState[key]};
 		});
 
-		//console.table(debug);
+		console.table(debug);
 		this.setState(nextState);
 	}
 

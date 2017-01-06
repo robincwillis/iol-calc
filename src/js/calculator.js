@@ -47,7 +47,7 @@ export const updateCalcuation = (state) => {
 	}
 
 	if (state.avgCornealRadius && state.cornealWidth) {
-		state.cornealHeight =  Math.sqrt( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) < 0 ? 0  : ( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) ))
+		state.cornealHeight = state.avgCornealRadius - ( Math.sqrt( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) < 0 ? 0  : ( state.avgCornealRadius * state.avgCornealRadius - ( (state.cornealWidth * state.cornealWidth ) / 4 ) )) )
 	} else {
 		state.cornealHeight = null;
 	}
@@ -80,7 +80,7 @@ export const updateCalcuation = (state) => {
 
 
 	if (state.avgCornealRadius && state.optAxialLength && state.postOperativeACD && state.emmetropiaIOLPower) {
-		let desiredRefaction = ( 1000 * 1.336 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) - state.emmetropiaIOLPower * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius -0.333 * state.postOperativeACD )) / (1.336 * (12 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius ) -0.001 * state.emmetropiaIOLPower * (state.optAxialLength - state.postOperativeACD) * (12 * ( 1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD ) + state.postOperativeACD * state.avgCornealRadius ));
+		let desiredRefaction = ( 1000 * 1.336 * (1.336 * state.avgCornealRadius - 0.333 * state.optAxialLength) - state.emmetropiaIOLPower * (state.optAxialLength - state.postOperativeACD) * (1.336 * state.avgCornealRadius -0.333 * state.postOperativeACD )) / (1.336 * (12 * (1.336 * state.avgCornealRadius -0.333 * state.optAxialLength) + state.optAxialLength * state.avgCornealRadius ) -0.001 * state.emmetropiaIOLPower * (state.optAxialLength - state.postOperativeACD) * (12 * ( 1.336 * state.avgCornealRadius - 0.333 * state.postOperativeACD ) + state.postOperativeACD * state.avgCornealRadius ));
 		state.desiredRefaction = Number(desiredRefaction.toFixed(2));
 	} else {
 		state.desiredRefaction = null;

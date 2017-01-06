@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7dc194b88189f6097c3b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8b0a628357eb16ec5dbd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22309,7 +22309,7 @@
 					debug[key] = { value: nextState[key] };
 				});
 
-				//console.table(debug);
+				console.table(debug);
 				this.setState(nextState);
 			}
 		}, {
@@ -37425,7 +37425,7 @@
 		}
 
 		if (state.avgCornealRadius && state.cornealWidth) {
-			state.cornealHeight = Math.sqrt(state.avgCornealRadius * state.avgCornealRadius - state.cornealWidth * state.cornealWidth / 4 < 0 ? 0 : state.avgCornealRadius * state.avgCornealRadius - state.cornealWidth * state.cornealWidth / 4);
+			state.cornealHeight = state.avgCornealRadius - Math.sqrt(state.avgCornealRadius * state.avgCornealRadius - state.cornealWidth * state.cornealWidth / 4 < 0 ? 0 : state.avgCornealRadius * state.avgCornealRadius - state.cornealWidth * state.cornealWidth / 4);
 		} else {
 			state.cornealHeight = null;
 		}
