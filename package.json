@@ -18,12 +18,14 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
+    "d3": "^4.4.0",
     "moment": "^2.16.0",
-    "react": "^0.14.6",
-    "react-addons-css-transition-group": "^0.14.7",
-    "react-dom": "^0.14.6",
+    "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-addons-shallow-compare": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-toggle": "^2.2.0",
     "svg-inline-loader": "^0.4.0",
-    "svg-inline-react": "^0.3.1",
     "underscore": "^1.8.3",
     "underscore-deep-extend": "0.0.5"
   },

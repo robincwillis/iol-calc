@@ -1,7 +1,7 @@
 import 'sass/components/common/button';
 
 import React, { Component } from 'react';
-import InlineSVG from 'svg-inline-react/lib';
+//import InlineSVG from 'svg-inline-react/lib';
 
 export default class Button extends Component {
 

@@ -24,9 +24,10 @@ export default class Input extends Component {
 
   	if(this.props.action) {
   		let value = event.target.value;
-   		if(event.target.type === 'number') {
+   		if(event.target.type === 'number' && event.target.value.length !== 0) {
   			value = Number(value);
   		}
+
   		this.props.action(event.target.name, value);
   	}
   }
@@ -47,14 +48,20 @@ export default class Input extends Component {
 			className += ' error';
 		}
 
+    let value = this.props.value;
+    if(value === null) {
+      value = ''
+    }
+
 		return (
 			<div className={"input-container" + className}>
 			 	<div className="input-status"></div>
 			 	<input
 			 		name={this.props.name}
 			 		onChange={this.handleOnChange.bind(this)}
-			 		value={this.props.value}
+			 		value={value}
 			 		type={this.props.type}
+          step="any"
 			 		placeholder={this.props.placeholder}
 		 		/>
 			</div>

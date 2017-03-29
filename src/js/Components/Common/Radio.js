@@ -22,7 +22,7 @@ export default class Radio extends Component {
 		let last = this.props.last ? ' last' : '';
 
 		return (
-			<div key={this.props.key} className="radio-container">
+			<div className="radio-container">
 				<div className="radio-input">
 				 <input
 						name={this.props.name}
