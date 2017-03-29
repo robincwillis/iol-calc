@@ -39,3 +39,5 @@ jspm_packages
 .DS_Store
 
 dist/*.hot-update.json
+dist/*.hot-update.js
+
